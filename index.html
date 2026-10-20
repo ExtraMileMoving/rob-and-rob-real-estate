@@ -30,6 +30,7 @@
     --brick-dark:#2f3d75;
     --sand:#e6e9f3;
     --line:#dde1ec;
+    --gold:#f2c14e;
     --radius:14px;
     --max:1120px;
   }
@@ -198,36 +199,117 @@
   .logo-exp{height:40px}
   .logo-realtor{height:52px}
 
-  /* Slideshow */
-  .slideshow{position:relative;height:clamp(280px,55vh,540px);overflow:hidden;background:var(--pine-dark)}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;display:grid;place-items:center}
-  .slide.active{opacity:1}
-  .slide img{width:100%;height:100%;object-fit:cover;display:block}
-  /* Transparent cutout photos: sit on the brand gradient, anchored bottom-right so captions stay readable */
-  .slide:has(img.cutout){background:linear-gradient(135deg,var(--pine-dark),var(--brick))}
-  .slide img.cutout{position:absolute;inset:0;object-fit:contain;object-position:85% bottom;padding-top:24px}
-  @media (max-width:760px){.slide img.cutout{object-position:center bottom}}
-  .slide .ph{
-    width:100%;height:100%;display:grid;place-items:center;text-align:center;color:#e2e5f1;
-    font-size:1.05rem;padding:20px;
-    background:linear-gradient(135deg,var(--pine-dark),var(--brick));
+  /* Slideshow: each slide is an offer with its own background and artwork */
+  .slideshow{position:relative;height:clamp(500px,72vh,620px);overflow:hidden;background:var(--pine-dark)}
+  .slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s .9s;overflow:hidden}
+  .slide.active{opacity:1;visibility:visible;transition:opacity .9s ease}
+  .slide-inner{position:relative;height:100%;display:grid;grid-template-columns:1fr 1.05fr;gap:32px;align-items:center}
+  .slide-copy{position:relative;z-index:4;color:#fff;max-width:520px;padding-bottom:40px}
+  .slide-copy .kicker{font-size:.82rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#c5cbe6}
+  .slide-copy h2{color:#fff;font-size:clamp(2rem,4.2vw,3.3rem);line-height:1.08;margin:.5rem 0 .9rem}
+  .slide-copy h2 em{font-style:normal;color:var(--gold)}
+  .slide-copy p{color:#dfe3f3;font-size:1.1rem}
+  .slide-copy .btn{margin-top:1.5rem}
+  .slide-copy .btn-primary{background:#fff;color:var(--pine-dark)}
+  .slide-copy .btn-primary:hover{background:var(--sand)}
+  .slide-copy .fine{font-size:.78rem;color:#b4b9d0;margin-top:.9rem}
+  .slide-art{position:relative;height:100%}
+  .slide-art img{position:absolute;display:block}
+  .rob-cutout{bottom:0;right:-2%;height:94%;width:auto;filter:drop-shadow(0 20px 30px rgba(0,0,0,.35))}
+
+  /* 1: Michigan map */
+  .s-map{background:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 48px),
+      repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 48px),
+      radial-gradient(circle at 72% 45%,#3d4f94 0%,#262c4d 62%)}
+  .mi-map{position:absolute;right:4%;top:5%;height:90%;width:auto;overflow:visible}
+  .mi-state{fill:rgba(255,255,255,.07);stroke:rgba(255,255,255,.55);stroke-width:1.4}
+  .mi-counties{fill:none;stroke:rgba(255,255,255,.14);stroke-width:.6}
+  .mi-served{fill:#8fa2ec;stroke:#fff;stroke-width:.8}
+  .mi-pin circle{fill:#fff}
+  .mi-pin .mi-pulse{fill:none;stroke:var(--gold);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:pulse 2s ease-out infinite}
+  .mi-pin text{fill:#fff;font:600 11px "Open Sans",sans-serif}
+  @keyframes pulse{from{transform:scale(.6);opacity:1}to{transform:scale(2.4);opacity:0}}
+  .counties{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.1rem;list-style:none}
+  .counties li{font-size:.85rem;font-weight:600;padding:5px 12px;border-radius:999px;background:rgba(143,162,236,.22);border:1px solid rgba(143,162,236,.5);color:#fff}
+
+  /* 2: Bundle (light slide, echoes the yard sign's chevrons) */
+  .s-bundle{background:
+      linear-gradient(125deg,transparent 0 46%,#e9ebf2 46% 60%,transparent 60%),
+      linear-gradient(55deg,transparent 0 62%,#eef0f5 62% 74%,transparent 74%),
+      #fafbfd}
+  .s-bundle .slide-copy h2{color:var(--pine-dark)}
+  .s-bundle .slide-copy h2 em{color:var(--brick)}
+  .s-bundle .slide-copy .kicker{color:var(--brick)}
+  .s-bundle .slide-copy p{color:var(--muted)}
+  .s-bundle .slide-copy .fine{color:var(--muted)}
+  .s-bundle .slide-copy .btn-primary{background:var(--brick);color:#fff}
+  .s-bundle .slide-copy .btn-primary:hover{background:var(--brick-dark)}
+  .yard-sign{position:absolute;right:2%;bottom:0;height:90%;aspect-ratio:.9;z-index:2}
+  .yard-sign span{position:absolute;background:linear-gradient(90deg,#fff,#e4e7ef 60%,#c9cedc);box-shadow:0 6px 14px -6px rgba(0,0,0,.35)}
+  .ys-post{left:0;bottom:0;width:6%;height:100%;border-radius:3px 3px 0 0}
+  .ys-arm{left:0;top:3%;width:100%;height:4%;border-radius:0 3px 3px 0}
+  .ys-chain{top:7%;width:1.2%!important;height:3.5%;background:#9aa1b5!important;box-shadow:none!important}
+  .ys-c1{left:30%}.ys-c2{left:78%}
+  .yard-sign img{left:22%;top:10%;width:62%;border-radius:4px;box-shadow:0 22px 34px -14px rgba(27,34,50,.5)}
+  .truck{position:absolute;left:-12%;bottom:2%;width:50%;z-index:3;overflow:visible}
+
+  /* 3: Satisfaction guarantee */
+  .s-guarantee{background:
+      repeating-conic-gradient(from 0deg at 72% 62%,rgba(255,255,255,.07) 0 7deg,transparent 7deg 14deg),
+      radial-gradient(circle at 72% 62%,#4a5ca6 0%,#2f3d75 45%,#262c4d 85%)}
+  .badge{
+    position:absolute;left:-4%;bottom:8%;z-index:3;width:clamp(130px,32%,180px);aspect-ratio:1;border-radius:50%;
+    background:#fff;color:var(--pine-dark);display:grid;place-content:center;text-align:center;
+    outline:3px dashed var(--brick);outline-offset:-12px;transform:rotate(-10deg);
+    box-shadow:0 0 0 10px rgba(255,255,255,.18),0 24px 40px -12px rgba(0,0,0,.55);
+    font-family:"Montserrat",sans-serif;font-weight:700;line-height:1.05;
   }
-  .slide .ph b{display:block;font-family:"Montserrat",sans-serif;font-size:1.6rem;color:#fff;margin-bottom:6px}
-  .slide-caption{
-    position:absolute;left:0;right:0;bottom:0;padding:60px 20px 46px;
-    background:linear-gradient(transparent,rgba(28,32,58,.72));color:#fff;
+  .badge .b-num{font-size:clamp(2.2rem,5vw,3.4rem);color:var(--brick)}
+  .badge .b-txt{font-size:clamp(.62rem,1.2vw,.8rem);letter-spacing:.14em;text-transform:uppercase}
+
+  /* 4: Underwriter */
+  .s-underwriter{background:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 2px,transparent 2px 30px),
+      linear-gradient(160deg,#343c66 0%,#1d2340 100%)}
+  .loan-doc{
+    position:absolute;left:4%;top:16%;z-index:3;width:clamp(150px,40%,230px);aspect-ratio:.78;background:#fff;border-radius:6px;
+    padding:7% 8%;transform:rotate(-7deg);box-shadow:0 26px 40px -14px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:8%;
   }
-  .slide-caption .wrap{font-family:"Montserrat",sans-serif;font-size:clamp(1.2rem,2.6vw,1.8rem)}
+  .loan-doc b{font-family:"Montserrat",sans-serif;font-size:clamp(.6rem,1.1vw,.78rem);letter-spacing:.1em;color:var(--pine-dark);text-transform:uppercase}
+  .loan-doc i{display:block;height:5px;border-radius:3px;background:var(--line)}
+  .loan-doc i:nth-of-type(2n){width:70%}
+  .stamp{
+    position:absolute;right:-12%;bottom:16%;transform:rotate(-14deg);border:3px solid #2e8b57;color:#2e8b57;border-radius:6px;
+    padding:4px 10px;font:700 clamp(.9rem,1.9vw,1.25rem) "Montserrat",sans-serif;letter-spacing:.1em;background:rgba(255,255,255,.85);
+  }
+
+  /* Controls: sit under the content so they never cover the text */
+  .ss-controls{position:absolute;bottom:22px;left:calc(max(0px,(100% - var(--max))/2) + 20px);z-index:5;display:flex;align-items:center;gap:14px}
   .ss-btn{
-    position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;
-    border:0;background:rgba(255,255,255,.85);color:var(--pine-dark);font-size:1.4rem;cursor:pointer;
+    position:relative;width:36px;height:36px;border-radius:50%;
+    border:0;background:rgba(255,255,255,.88);color:var(--pine-dark);font-size:1.2rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);
   }
   .ss-btn:hover{background:#fff}
-  .ss-prev{left:16px}.ss-next{right:16px}
-  .ss-dots{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:10px;z-index:3}
-  .ss-dots button{width:11px;height:11px;border-radius:50%;border:0;background:rgba(255,255,255,.5);cursor:pointer;padding:0}
-  .ss-dots button.active{background:#fff}
-  @media (max-width:760px){.ss-btn{width:38px;height:38px;font-size:1.1rem}}
+  .ss-dots{display:flex;gap:10px}
+  .ss-dots button{width:11px;height:11px;border-radius:50%;border:0;background:rgba(160,170,200,.6);cursor:pointer;padding:0}
+  .ss-dots button.active{background:var(--brick);box-shadow:0 0 0 2px #fff}
+  @media (max-width:760px){
+    .slideshow{height:700px}
+    .slide-inner{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:8px;padding-top:34px}
+    .slide-copy{padding-bottom:0}
+    .slide-copy h2{font-size:1.9rem}
+    .slide-copy p{font-size:1rem}
+    .slide-copy .btn{margin-top:1rem}
+    .slide-art{margin-bottom:56px}
+    .counties{gap:6px}.counties li{font-size:.78rem;padding:4px 10px}
+    .mi-map{right:auto;left:50%;transform:translateX(-50%);top:0;height:100%}
+    .truck{left:-4%;width:56%}
+    .badge{left:0;bottom:4%;width:140px;outline-offset:-10px}
+    .badge .b-num{font-size:1.9rem}.badge .b-txt{font-size:.56rem}
+    .ss-controls{left:50%;transform:translateX(-50%);bottom:14px}
+  }
+  @media (prefers-reduced-motion:reduce){.mi-pin .mi-pulse{animation:none}.slide{transition:none}}
   .legal{margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);display:flex;gap:18px;align-items:center;flex-wrap:wrap}
   .eho{display:flex;align-items:center;gap:8px}
 
@@ -276,30 +358,101 @@
 
 <main id="top">
 
-  <!-- SLIDESHOW
-       To add a photo: replace a slide's <div class="ph">...</div> with
-       <img src="images/photo1.jpg" alt="Describe the photo">
-       Edit or remove captions as you like. Add/remove whole .slide blocks freely; dots build automatically. -->
-  <section class="slideshow" aria-roledescription="carousel" aria-label="Featured photos" style="padding:0">
-    <div class="slide active">
-      <img class="cutout" src="images/rob-1.png" alt="Robert McClelland, REALTOR®, smiling with arms crossed">
-      <div class="slide-caption"><div class="wrap">Homes across Southeast Michigan</div></div>
+  <!-- SLIDESHOW: four offers, each with its own background and artwork.
+       Edit the text inside each .slide-copy. Add/remove whole .slide blocks freely; dots build automatically. -->
+  <section class="slideshow" aria-roledescription="carousel" aria-label="Featured offers" style="padding:0">
+
+    <div class="slide s-map active" aria-roledescription="slide" aria-label="1 of 4">
+      <div class="wrap slide-inner">
+        <div class="slide-copy">
+          <p class="kicker">Your Southeast Michigan REALTOR®</p>
+          <h2>Southeast Michigan, <em>covered.</em></h2>
+          <p>Buying or selling anywhere across five counties, with someone who knows the local market.</p>
+          <ul class="counties"><li>Livingston</li><li>Washtenaw</li><li>Wayne</li><li>Oakland</li><li>Macomb</li></ul>
+          <a class="btn btn-primary" href="#contact">Let's talk</a>
+        </div>
+        <div class="slide-art">
+          <svg class="mi-map" viewBox="-4 -4 354 408" aria-hidden="true">
+  <path class="mi-state" d="M342.3,310.9L342.9,314.9L345.7,320.5L346.0,323.0L344.3,325.4L343.2,332.8L343.8,335.3L342.0,341.1L341.4,344.5L338.6,347.9L336.3,347.7L334.4,349.9L334.6,346.5L333.2,345.1L334.7,344.3L337.1,341.1L334.9,339.8L333.5,340.0L329.7,341.8L328.6,343.4L330.0,344.8L330.3,347.1L328.0,346.9L326.3,349.6L326.5,353.9L325.4,357.9L322.8,360.6L318.2,361.9L315.4,366.9L315.7,373.5L315.2,375.7L312.9,377.0L312.9,379.2L312.8,380.6L310.3,382.6L309.4,384.6L307.4,384.9L306.3,388.2L304.6,388.8L302.0,392.5L302.8,396.6L301.6,397.0L288.4,397.6L283.3,397.8L262.7,398.6L261.0,398.7L243.7,399.2L243.7,395.4L242.9,395.4L226.9,395.4L222.9,395.4L207.1,395.5L201.6,395.5L189.9,395.4L182.8,395.4L170.1,395.4L157.3,395.4L161.9,391.9L166.1,387.4L171.8,373.9L177.0,366.4L179.9,359.5L180.8,355.8L181.9,352.2L183.0,345.3L182.8,342.3L183.8,337.8L183.6,335.0L183.6,329.4L182.7,320.1L181.0,313.9L175.6,302.0L173.9,297.2L172.8,292.6L169.5,283.9L169.5,281.5L172.8,276.2L174.1,271.8L174.1,269.7L172.7,262.7L170.5,258.1L171.2,256.5L174.2,253.8L176.1,250.3L177.9,246.0L181.1,240.3L182.5,229.9L183.0,225.3L181.5,221.2L181.6,219.5L185.8,217.3L188.8,216.5L189.4,214.3L189.4,207.9L191.0,206.0L193.0,207.0L195.4,202.9L198.2,204.7L200.8,204.0L202.0,202.3L203.4,197.9L205.0,197.1L207.3,192.2L208.9,189.8L210.3,190.2L212.2,188.4L212.6,190.4L209.7,192.0L209.3,194.2L211.1,198.4L207.6,202.5L209.6,201.6L209.6,205.4L208.6,205.7L207.4,210.1L208.0,214.5L209.7,215.1L212.6,207.6L213.1,202.5L215.1,201.5L213.9,209.7L211.6,211.9L210.6,215.4L212.8,216.1L214.0,212.7L216.5,209.4L218.5,205.1L219.7,196.9L218.8,188.5L219.5,184.8L222.2,182.2L223.7,182.1L226.5,179.6L231.2,179.0L234.0,179.3L238.9,177.4L238.7,175.7L233.7,174.8L231.5,172.4L230.3,166.5L232.8,162.6L234.8,161.9L237.8,158.4L237.5,156.8L234.8,155.4L244.0,156.2L245.0,153.6L246.9,153.7L247.5,155.0L254.4,158.9L258.4,161.9L260.4,160.8L262.1,161.7L264.1,161.2L269.5,163.4L272.7,167.3L273.2,170.2L275.8,171.6L280.8,171.4L282.1,171.9L286.5,175.8L290.0,176.2L295.3,179.9L299.7,179.6L303.0,183.6L304.6,184.9L303.3,186.3L304.3,188.6L305.6,191.2L307.3,192.8L309.4,199.6L306.3,198.5L303.9,196.8L301.6,198.9L302.2,204.6L304.0,206.8L307.3,208.2L307.3,209.5L308.3,213.4L308.2,216.3L309.2,218.2L308.6,221.8L307.4,225.3L307.4,230.3L306.8,240.6L304.9,241.4L302.8,244.7L299.1,244.6L297.4,247.4L296.8,251.2L296.0,257.6L293.1,257.8L291.9,258.8L291.9,261.4L285.4,261.7L283.4,263.5L282.1,266.4L281.3,273.8L280.1,275.9L282.1,280.6L284.5,282.3L285.9,280.6L286.7,282.5L289.7,283.6L291.0,284.9L293.3,284.8L297.6,278.6L299.7,278.6L300.6,277.1L299.7,274.7L301.1,272.4L302.5,267.9L303.1,270.5L306.0,268.9L306.8,267.4L303.6,265.8L307.3,265.9L308.9,264.7L309.7,262.6L313.2,262.1L318.5,260.6L319.8,258.3L324.6,256.8L326.3,258.3L329.8,259.6L332.1,261.6L334.7,268.0L336.3,269.9L337.4,274.9L337.8,279.5L338.1,285.6L340.7,294.8L341.4,307.5L342.3,310.9ZM102.0,145.7L96.5,143.2L94.4,143.9L90.7,141.5L88.8,142.3L85.6,141.2L85.3,139.9L81.1,140.0L80.7,141.7L78.5,141.4L77.8,140.1L75.3,139.4L72.2,139.7L67.0,136.6L64.6,135.2L60.3,132.7L24.5,123.0L16.2,120.8L16.3,119.4L12.0,110.8L7.9,110.0L6.3,108.7L6.3,108.7L4.5,109.0L3.6,107.0L6.5,105.0L8.3,104.8L14.3,102.3L20.2,100.5L26.2,95.1L30.3,91.9L35.4,91.0L37.7,91.9L42.1,90.5L45.5,90.6L53.5,86.8L58.1,81.9L64.7,81.2L67.0,79.0L68.2,75.8L72.1,72.5L74.2,71.7L78.8,67.4L82.4,66.3L85.0,63.8L87.3,60.6L90.4,57.9L99.3,53.5L107.9,52.2L115.6,52.6L119.1,54.6L119.2,56.9L117.6,56.7L114.9,57.9L112.0,57.2L108.8,57.8L109.6,60.2L104.6,63.1L100.0,68.0L97.3,69.0L96.4,72.9L95.3,72.4L94.2,75.1L92.1,76.4L91.3,79.9L89.4,82.3L88.1,82.7L87.8,84.7L86.2,91.1L87.1,93.8L85.8,95.6L87.4,95.4L90.5,91.0L91.0,88.7L92.1,89.4L96.5,85.2L100.8,83.0L99.0,85.8L97.1,87.1L94.8,91.1L99.4,86.7L103.4,85.8L105.1,86.3L111.3,86.4L113.6,88.0L114.8,87.5L117.4,89.4L118.6,91.4L120.9,90.8L124.3,94.0L124.8,97.2L127.4,99.7L128.3,102.1L130.5,104.7L133.4,105.4L133.1,109.5L134.8,111.0L138.7,111.7L144.7,111.3L149.0,109.0L150.7,109.4L152.9,113.1L154.7,114.5L157.6,114.7L158.9,112.3L161.3,112.7L162.7,114.7L163.3,111.1L162.3,108.4L164.7,107.3L165.8,109.0L164.9,111.9L167.5,113.2L171.5,109.5L177.6,106.3L186.7,100.6L188.4,101.7L198.3,99.6L204.8,100.4L210.2,100.5L214.8,100.2L225.2,95.6L228.0,95.2L232.6,95.5L237.5,94.8L234.1,99.1L233.8,106.1L234.1,108.4L232.9,109.4L234.3,112.0L236.7,112.4L238.1,111.6L239.1,113.0L241.4,112.8L244.0,114.2L249.2,111.7L251.2,111.9L252.9,114.3L252.7,116.1L256.6,114.7L257.6,115.0L259.2,111.7L262.1,110.4L265.6,111.4L267.3,111.0L268.5,108.9L272.7,109.2L273.5,110.7L271.9,115.9L273.0,122.1L273.2,127.0L268.7,127.1L267.5,130.4L269.8,131.1L270.5,130.0L272.8,130.2L274.1,132.1L277.0,133.1L275.0,135.2L278.7,139.0L280.5,139.1L283.6,141.4L284.8,139.5L287.0,141.3L288.2,139.9L285.7,134.8L287.9,135.5L294.2,134.9L296.0,135.6L298.2,140.3L300.6,141.9L299.1,145.2L297.0,146.3L292.8,144.2L288.1,145.1L283.3,142.9L281.6,143.5L277.5,143.5L273.3,142.3L264.1,143.6L262.1,145.1L256.4,141.5L254.1,139.0L252.1,139.4L250.1,137.9L248.6,140.0L248.9,142.6L246.6,144.2L246.7,146.6L248.1,149.8L246.3,150.8L242.6,148.7L242.1,147.1L238.9,145.2L238.1,143.6L234.8,140.3L228.9,138.0L226.9,138.3L221.8,135.8L219.1,136.1L217.1,134.9L216.3,135.9L213.4,135.3L209.6,139.2L206.9,143.0L205.6,143.4L200.7,142.2L198.3,142.9L195.9,144.1L196.2,145.8L192.7,143.9L189.4,143.1L185.8,143.8L184.2,143.2L180.7,144.5L178.7,146.6L178.4,149.9L177.0,153.6L174.8,153.4L172.8,155.5L170.4,156.2L169.5,158.5L167.5,158.7L167.5,161.0L165.6,161.5L166.2,164.6L163.2,163.0L161.8,160.9L163.6,159.5L163.8,157.8L165.5,156.2L165.6,154.1L167.6,154.3L169.9,149.8L169.5,147.6L167.6,147.1L164.9,150.9L159.0,149.7L159.5,152.3L157.5,154.8L156.7,157.6L152.1,159.2L151.3,160.6L150.4,158.6L150.9,155.8L150.3,152.3L149.0,150.7L147.5,151.7L146.7,157.9L147.2,158.5L142.4,161.3L138.4,168.0L135.8,175.5L132.9,178.8L129.8,184.6L123.5,193.6L124.5,195.3L121.5,194.6L120.3,192.1L118.3,190.7L118.0,189.2L120.3,183.1L122.0,180.6L121.7,178.9L120.0,177.6L117.6,180.0L113.4,180.5L113.4,180.5L112.3,178.1L113.4,176.9L112.9,174.9L114.9,173.2L115.9,171.1L115.4,168.7L116.6,165.1L114.5,161.3L116.3,160.6L115.1,158.3L113.6,157.6L112.2,155.7L108.5,155.5L107.1,153.3L104.5,154.1L102.5,153.5L101.1,151.9L103.7,149.2L102.0,145.7ZM219.2,152.2L220.3,153.3L218.5,154.3L219.2,152.2ZM212.9,151.2L216.2,153.2L215.6,155.1L212.6,153.1L212.9,151.2ZM208.5,165.1L209.6,162.6L210.0,159.1L210.9,158.3L211.1,155.4L213.9,155.7L213.7,160.1L214.3,164.4L211.4,166.7L208.5,165.1ZM205.4,156.8L207.4,156.4L206.6,159.2L205.6,159.1L205.4,156.8ZM250.3,149.2L251.5,148.4L252.9,151.5L262.9,154.7L260.2,157.7L256.7,156.8L254.6,153.6L250.3,149.2ZM163.0,164.0L166.1,167.3L164.9,168.4L164.2,166.6L162.1,164.3L163.0,164.0ZM197.6,174.4L199.6,175.3L199.7,178.3L197.6,174.4ZM189.7,192.6L190.7,191.4L193.6,192.7L192.7,197.6L190.1,195.0L189.7,192.6ZM185.9,200.4L187.6,198.1L188.5,200.5L185.9,200.4ZM53.3,28.4L56.6,24.9L71.2,17.6L72.2,17.7L78.8,12.7L83.6,10.5L84.5,11.1L88.8,9.6L88.7,11.0L86.8,11.8L82.2,16.0L82.2,17.5L78.4,20.3L70.5,23.1L64.1,26.5L64.4,27.5L67.9,27.5L58.9,31.3L56.1,31.1L53.3,28.4Z"/>
+  <path class="mi-counties" d="M315.9,301.4L315.9,304.0L320.9,303.9L321.1,311.8L321.7,327.4L316.6,327.7L301.6,328.2L301.3,318.0L301.3,307.6L301.3,307.0L305.9,306.9L305.9,301.7L315.9,301.4ZM190.8,293.0L191.0,272.1L211.3,272.1L211.3,292.9L211.3,303.4L201.6,303.4L191.0,303.4L190.8,293.0ZM231.5,272.2L252.3,272.1L252.1,293.1L242.0,293.1L231.7,293.1L231.5,272.2ZM315.9,301.4L316.5,301.4L315.9,280.5L337.8,279.5L338.1,285.6L340.7,294.8L341.4,307.5L342.3,310.9L321.1,311.8L320.9,303.9L315.9,304.0L315.9,301.4ZM182.5,229.9L200.3,230.2L200.2,251.1L190.7,251.0L176.1,250.3L177.9,246.0L181.1,240.3L182.5,229.9ZM262.2,230.6L283.0,230.5L283.1,251.3L271.0,251.3L262.4,251.4L262.2,230.6ZM231.7,251.1L241.7,251.3L252.1,251.4L252.3,272.1L231.5,272.2L231.7,251.1ZM242.0,209.5L262.2,209.7L262.2,230.6L257.9,230.4L241.8,230.3L242.0,209.5ZM262.6,189.1L267.6,189.1L283.3,188.9L283.3,199.1L282.8,199.2L283.0,209.6L262.2,209.7L262.6,189.1ZM252.1,251.4L262.4,251.4L271.0,251.3L271.0,261.2L271.0,271.5L262.6,271.3L262.4,272.2L252.3,272.1L252.1,251.4ZM262.2,209.7L283.0,209.6L283.0,230.5L262.2,230.6L262.2,209.7ZM242.3,313.9L262.4,313.9L262.6,334.4L262.6,334.8L252.4,334.8L242.3,334.8L242.3,313.9ZM222.8,376.7L242.7,376.7L242.9,395.4L226.9,395.4L222.9,395.4L222.8,376.7ZM242.0,293.1L252.1,293.1L262.4,293.1L262.4,313.3L262.4,313.9L242.3,313.9L242.4,303.5L242.0,303.5L242.0,293.1ZM222.0,313.9L242.3,313.9L242.3,334.8L232.1,334.8L222.2,334.8L222.0,313.9ZM202.6,355.8L212.2,355.7L222.6,355.8L222.8,376.7L202.6,376.9L202.6,355.8ZM190.7,251.0L200.2,251.1L211.3,251.1L211.3,272.1L191.0,272.1L190.7,251.0ZM176.1,250.3L190.7,251.0L191.0,272.1L174.1,271.8L174.1,269.7L172.7,262.7L170.5,258.1L171.2,256.5L174.2,253.8L176.1,250.3ZM211.3,272.1L231.5,272.2L231.7,293.1L211.3,292.9L211.3,272.1ZM172.8,292.6L190.8,293.0L191.0,303.4L201.6,303.4L201.6,308.7L196.5,308.6L196.5,313.9L181.0,313.9L175.6,302.0L173.9,297.2L172.8,292.6ZM241.5,194.0L246.7,194.1L246.7,188.9L262.6,189.1L262.2,209.7L242.0,209.5L241.5,199.2L241.5,194.0ZM241.8,230.3L257.9,230.4L262.2,230.6L262.4,251.4L252.1,251.4L241.7,251.3L241.5,234.8L241.8,230.3ZM212.0,334.9L222.2,334.8L232.1,334.8L232.3,355.7L222.6,355.8L212.2,355.7L212.0,334.9ZM113.6,157.6L120.0,157.6L120.0,147.1L123.4,147.1L123.4,141.8L134.0,141.9L134.0,147.1L135.8,147.1L135.8,167.9L138.4,168.0L135.8,175.5L132.9,178.8L129.8,184.6L123.5,193.6L124.5,195.3L121.5,194.6L120.3,192.1L118.3,190.7L118.0,189.2L120.3,183.1L122.0,180.6L121.7,178.9L120.0,177.6L117.6,180.0L113.4,180.5L113.4,180.5L112.3,178.1L113.4,176.9L112.9,174.9L114.9,173.2L115.9,171.1L115.4,168.7L116.6,165.1L114.5,161.3L116.3,160.6L115.1,158.3L113.6,157.6ZM252.3,272.1L262.4,272.2L262.6,271.3L271.0,271.5L271.0,286.9L270.8,292.1L262.4,292.1L262.4,293.1L252.1,293.1L252.3,272.1ZM198.3,110.7L198.3,99.6L204.8,100.4L210.2,100.5L214.8,100.2L225.2,95.6L225.2,126.3L198.3,126.3L198.3,110.7ZM218.8,188.5L225.8,188.7L225.8,193.9L241.5,194.0L241.5,199.2L242.0,209.5L222.9,209.4L221.4,210.0L221.1,212.2L219.4,211.3L219.1,209.5L216.5,209.4L218.5,205.1L219.7,196.9L218.8,188.5ZM247.3,355.7L252.4,355.7L272.1,355.5L272.5,355.5L272.5,376.7L262.6,376.6L247.8,376.8L247.3,360.9L247.3,355.7ZM202.6,376.9L222.8,376.7L222.9,395.4L207.1,395.5L201.6,395.5L202.8,393.0L202.6,376.9ZM211.3,251.1L221.1,251.1L231.7,251.1L231.5,272.2L211.3,272.1L211.3,251.1ZM271.0,286.9L276.1,287.0L275.9,289.5L286.1,289.7L285.9,292.3L291.1,292.3L291.3,301.5L291.1,307.7L281.1,307.8L281.1,313.1L262.4,313.3L262.4,293.1L262.4,292.1L270.8,292.1L271.0,286.9ZM242.7,376.7L247.8,376.8L262.6,376.6L262.7,398.6L261.0,398.7L243.7,399.2L243.7,395.4L242.9,395.4L242.7,376.7ZM271.0,251.3L283.1,251.3L296.8,251.2L296.0,257.6L293.1,257.8L291.9,258.8L291.9,261.4L285.4,261.7L283.4,263.5L282.1,266.4L276.2,266.4L276.2,261.2L271.0,261.2L271.0,251.3ZM221.1,212.2L221.4,210.0L222.9,209.4L242.0,209.5L241.8,230.3L221.1,230.3L221.1,212.2ZM271.0,271.5L271.0,261.2L276.2,261.2L276.2,266.4L282.1,266.4L281.3,273.8L280.1,275.9L282.1,280.6L284.5,282.3L285.9,280.6L286.7,282.5L289.7,283.6L291.0,284.9L291.1,292.3L285.9,292.3L286.1,289.7L275.9,289.5L276.1,287.0L271.0,286.9L271.0,271.5ZM283.3,188.9L304.3,188.6L305.6,191.2L307.3,192.8L309.4,199.6L306.3,198.5L303.9,196.8L301.6,198.9L302.2,204.6L304.0,206.8L307.3,208.2L307.3,209.5L283.0,209.6L282.8,199.2L283.3,199.1L283.3,188.9ZM3.6,107.0L6.5,105.0L8.3,104.8L14.3,102.3L20.2,100.5L26.2,95.1L27.2,95.1L27.2,105.4L32.5,105.4L32.5,110.6L48.6,110.6L48.6,121.0L64.6,121.1L64.6,135.2L60.3,132.7L24.5,123.0L16.2,120.8L16.3,119.4L12.0,110.8L7.9,110.0L6.3,108.7L6.3,108.7L4.5,109.0L3.6,107.0ZM102.0,145.7L102.0,126.2L123.4,126.2L123.4,141.8L123.4,147.1L120.0,147.1L120.0,157.6L113.6,157.6L112.2,155.7L108.5,155.5L107.1,153.3L104.5,154.1L102.5,153.5L101.1,151.9L103.7,149.2L102.0,145.7ZM221.1,230.3L241.8,230.3L241.5,234.8L241.7,251.3L231.7,251.1L221.1,251.1L220.9,235.5L221.1,230.3ZM211.3,292.9L231.7,293.1L242.0,293.1L242.0,303.5L242.4,303.5L242.3,313.9L222.0,313.9L222.0,303.4L211.3,303.4L211.3,292.9ZM87.8,84.7L86.2,91.1L87.1,93.8L85.8,95.6L87.4,95.4L90.5,91.0L91.0,88.7L92.1,89.4L96.5,85.2L100.8,83.0L99.0,85.8L97.1,87.1L94.8,91.1L99.4,86.7L103.4,85.8L105.1,86.3L105.1,95.1L107.4,95.1L107.4,100.2L102.0,100.3L102.0,115.8L77.9,115.8L77.9,89.9L83.3,89.9L83.3,84.7L87.8,84.7ZM174.1,271.8L191.0,272.1L190.8,293.0L172.8,292.6L169.5,283.9L169.5,281.5L172.8,276.2L174.1,271.8ZM144.7,111.3L149.0,109.0L150.7,109.4L152.9,113.1L154.7,114.5L157.6,114.7L158.9,112.3L161.3,112.7L162.7,114.7L163.3,111.1L162.3,108.4L164.7,107.3L165.8,109.0L164.9,111.9L167.5,113.2L171.5,109.5L177.6,106.3L186.7,100.6L188.4,101.7L198.3,99.6L198.3,110.7L177.0,110.6L177.0,121.1L166.2,121.0L166.2,131.5L144.7,131.5L144.7,111.3ZM67.0,79.0L68.2,75.8L72.1,72.5L74.2,71.7L78.8,67.4L82.4,66.3L85.0,63.8L94.2,63.8L94.2,69.0L97.3,69.0L96.4,72.9L95.3,72.4L94.2,75.1L92.1,76.4L91.3,79.9L89.4,82.3L88.1,82.7L87.8,84.7L83.3,84.7L83.3,89.9L77.9,89.9L77.9,115.8L64.6,115.8L64.7,100.2L69.9,100.2L70.1,95.1L67.0,95.1L67.0,79.0ZM252.4,334.8L262.6,334.8L262.6,334.4L271.5,334.4L272.1,350.5L272.1,355.5L252.4,355.7L252.4,334.8ZM64.6,115.8L77.9,115.8L102.0,115.8L102.0,126.2L102.0,145.7L96.5,143.2L94.4,143.9L90.7,141.5L88.8,142.3L85.6,141.2L85.3,139.9L81.1,140.0L80.7,141.7L78.5,141.4L77.8,140.1L75.3,139.4L72.2,139.7L67.0,136.6L64.6,135.2L64.6,121.1L64.6,115.8ZM181.0,313.9L196.5,313.9L196.5,308.6L201.6,308.7L201.6,319.1L201.9,326.1L201.9,334.9L183.6,335.0L183.6,329.4L182.7,320.1L181.0,313.9ZM200.5,214.6L208.0,214.5L209.7,215.1L212.6,207.6L213.1,202.5L215.1,201.5L213.9,209.7L211.6,211.9L210.6,215.4L212.8,216.1L214.0,212.7L216.5,209.4L219.1,209.5L219.4,211.3L221.1,212.2L221.1,230.3L200.3,230.2L200.5,214.6ZM321.1,311.8L342.3,310.9L342.9,314.9L345.7,320.5L346.0,323.0L344.3,325.4L343.2,332.8L343.8,335.3L342.0,341.1L341.4,344.5L338.6,347.9L336.3,347.7L334.4,349.9L334.6,346.5L333.2,345.1L334.7,344.3L337.1,341.1L334.9,339.8L333.5,340.0L332.4,337.7L332.1,327.1L321.7,327.4L321.1,311.8ZM182.8,395.4L183.0,376.7L202.6,376.9L202.8,393.0L201.6,395.5L189.9,395.4L182.8,395.4ZM201.6,303.4L211.3,303.4L222.0,303.4L222.0,313.9L222.2,334.8L212.0,334.9L201.9,334.9L201.9,326.1L201.6,319.1L201.6,308.7L201.6,303.4ZM231.2,179.0L231.2,180.8L233.4,180.9L235.4,184.7L236.9,183.5L246.9,183.6L246.7,188.9L246.7,194.1L241.5,194.0L225.8,193.9L225.8,188.7L218.8,188.5L219.5,184.8L222.2,182.2L223.7,182.1L226.5,179.6L231.2,179.0ZM219.2,152.2L220.3,153.3L218.5,154.3L219.2,152.2ZM212.9,151.2L216.2,153.2L215.6,155.1L212.6,153.1L212.9,151.2ZM208.5,165.1L209.6,162.6L210.0,159.1L210.9,158.3L211.1,155.4L213.9,155.7L213.7,160.1L214.3,164.4L211.4,166.7L208.5,165.1ZM205.4,156.8L207.4,156.4L206.6,159.2L205.6,159.1L205.4,156.8ZM262.6,376.6L272.5,376.7L277.8,376.3L287.9,376.0L288.4,397.6L283.3,397.8L262.7,398.6L262.6,376.6ZM225.2,95.6L228.0,95.2L232.6,95.5L237.5,94.8L234.1,99.1L233.8,106.1L234.1,108.4L232.9,109.4L234.3,112.0L236.7,112.4L238.1,111.6L239.1,113.0L241.4,112.8L244.0,114.2L249.2,111.7L251.2,111.9L252.9,114.3L252.7,116.1L256.6,114.7L257.6,115.0L259.2,111.7L262.1,110.4L265.6,111.4L267.3,111.0L268.5,108.9L272.7,109.2L273.5,110.7L271.9,115.9L273.0,122.1L273.2,127.0L268.7,127.1L267.5,130.4L269.8,131.1L270.5,130.0L272.8,130.2L274.1,132.1L277.0,133.1L275.0,135.2L278.7,139.0L280.5,139.1L283.6,141.4L284.8,139.5L287.0,141.3L288.2,139.9L285.7,134.8L287.9,135.5L294.2,134.9L296.0,135.6L298.2,140.3L300.6,141.9L299.1,145.2L297.0,146.3L292.8,144.2L288.1,145.1L283.3,142.9L281.6,143.5L277.5,143.5L273.3,142.3L267.9,141.9L267.9,136.7L262.6,136.7L262.6,131.5L230.6,131.5L230.5,126.3L225.2,126.3L225.2,95.6ZM250.3,149.2L251.5,148.4L252.9,151.5L262.9,154.7L260.2,157.7L256.7,156.8L254.6,153.6L250.3,149.2ZM198.3,126.3L225.2,126.3L230.5,126.3L230.6,131.5L262.6,131.5L262.6,136.7L267.9,136.7L267.9,141.9L273.3,142.3L264.1,143.6L262.1,145.1L256.4,141.5L254.1,139.0L252.1,139.4L250.1,137.9L248.6,140.0L248.9,142.6L246.6,144.2L246.7,146.6L248.1,149.8L246.3,150.8L242.6,148.7L242.1,147.1L238.9,145.2L238.1,143.6L234.8,140.3L228.9,138.0L226.9,138.3L221.8,135.8L219.1,136.1L217.1,134.9L216.3,135.9L213.4,135.3L209.6,139.2L206.9,143.0L205.6,143.4L200.7,142.2L198.3,142.9L198.3,126.3ZM198.3,110.7L198.3,126.3L198.3,142.9L195.9,144.1L196.2,145.8L192.7,143.9L189.4,143.1L185.8,143.8L184.2,143.2L180.7,144.5L178.7,146.6L178.4,149.9L177.0,153.6L174.8,153.4L172.8,155.5L173.0,147.2L171.6,147.2L171.6,131.5L166.2,131.5L166.2,121.0L177.0,121.1L177.0,110.6L198.3,110.7ZM189.4,214.3L200.5,214.6L200.3,230.2L182.5,229.9L183.0,225.3L181.5,221.2L181.6,219.5L185.8,217.3L188.8,216.5L189.4,214.3ZM246.9,153.7L246.9,183.6L236.9,183.5L235.4,184.7L233.4,180.9L231.2,180.8L231.2,179.0L234.0,179.3L238.9,177.4L238.7,175.7L233.7,174.8L231.5,172.4L230.3,166.5L232.8,162.6L234.8,161.9L237.8,158.4L237.5,156.8L234.8,155.4L244.0,156.2L245.0,153.6L246.9,153.7ZM287.9,376.0L297.9,375.9L308.0,375.4L312.9,379.2L312.8,380.6L310.3,382.6L309.4,384.6L307.4,384.9L306.3,388.2L304.6,388.8L302.0,392.5L302.8,396.6L301.6,397.0L288.4,397.6L287.9,376.0ZM262.4,313.3L281.1,313.1L281.4,334.1L271.5,334.4L262.6,334.4L262.4,313.9L262.4,313.3ZM291.0,284.9L293.3,284.8L297.6,278.6L299.7,278.6L300.6,277.1L301.0,280.9L315.9,280.5L316.5,301.4L315.9,301.4L305.9,301.7L305.9,306.9L301.3,307.0L301.3,307.6L291.1,307.7L291.3,301.5L291.1,292.3L291.0,284.9ZM337.8,279.5L315.9,280.5L301.0,280.9L300.6,277.1L299.7,274.7L301.1,272.4L302.5,267.9L303.1,270.5L306.0,268.9L306.8,267.4L303.6,265.8L307.3,265.9L308.9,264.7L309.7,262.6L313.2,262.1L318.5,260.6L319.8,258.3L324.6,256.8L326.3,258.3L329.8,259.6L332.1,261.6L334.7,268.0L336.3,269.9L337.4,274.9L337.8,279.5ZM283.0,209.6L307.3,209.5L308.3,213.4L308.2,216.3L309.2,218.2L308.6,221.8L307.4,225.3L307.4,230.3L283.0,230.5L283.0,209.6ZM102.0,115.8L102.0,100.3L107.4,100.2L107.4,95.1L105.1,95.1L105.1,86.3L111.3,86.4L113.6,88.0L114.8,87.5L117.4,89.4L118.6,91.4L120.9,90.8L124.3,94.0L124.8,97.2L127.4,99.7L128.3,102.1L130.5,104.7L133.4,105.4L133.1,109.5L134.8,111.0L138.7,111.7L144.7,111.3L144.7,131.5L139.5,131.5L139.4,141.9L134.0,141.9L123.4,141.8L123.4,126.2L102.0,126.2L102.0,115.8ZM283.0,230.5L307.4,230.3L306.8,240.6L304.9,241.4L302.8,244.7L299.1,244.6L297.4,247.4L296.8,251.2L283.1,251.3L283.0,230.5ZM26.2,95.1L30.3,91.9L35.4,91.0L37.7,91.9L42.1,90.5L45.5,90.6L53.5,86.8L58.1,81.9L64.7,81.2L67.0,79.0L67.0,95.1L70.1,95.1L69.9,100.2L64.7,100.2L64.6,115.8L64.6,121.1L48.6,121.0L48.6,110.6L32.5,110.6L32.5,105.4L27.2,105.4L27.2,95.1L26.2,95.1ZM291.1,307.7L301.3,307.6L301.3,318.0L301.6,328.2L301.6,328.4L291.4,328.7L291.6,334.0L281.4,334.1L281.1,313.1L281.1,307.8L291.1,307.7ZM180.8,355.8L202.6,355.8L202.6,376.9L183.0,376.7L183.0,366.4L177.0,366.4L179.9,359.5L180.8,355.8ZM269.5,163.4L272.7,167.3L273.2,170.2L275.8,171.6L280.8,171.4L282.1,171.9L286.5,175.8L290.0,176.2L295.3,179.9L299.7,179.6L303.0,183.6L304.6,184.9L303.3,186.3L304.3,188.6L283.3,188.9L267.6,189.1L267.5,184.1L267.3,163.4L269.5,163.4ZM246.9,183.6L246.9,153.7L247.5,155.0L254.4,158.9L258.4,161.9L260.4,160.8L262.1,161.7L264.1,161.2L269.5,163.4L267.3,163.4L267.5,184.1L267.6,189.1L262.6,189.1L246.7,188.9L246.9,183.6ZM163.0,164.0L166.1,167.3L164.9,168.4L164.2,166.6L162.1,164.3L163.0,164.0ZM134.0,141.9L139.4,141.9L139.5,131.5L144.7,131.5L166.2,131.5L171.6,131.5L171.6,147.2L173.0,147.2L172.8,155.5L170.4,156.2L169.5,158.5L167.5,158.7L167.5,161.0L165.6,161.5L166.2,164.6L163.2,163.0L161.8,160.9L163.6,159.5L163.8,157.8L165.5,156.2L165.6,154.1L167.6,154.3L169.9,149.8L169.5,147.6L167.6,147.1L164.9,150.9L159.0,149.7L159.5,152.3L157.5,154.8L156.7,157.6L152.1,159.2L151.3,160.6L150.4,158.6L150.9,155.8L150.3,152.3L149.0,150.7L147.5,151.7L146.7,157.9L147.2,158.5L142.4,161.3L138.4,168.0L135.8,167.9L135.8,147.1L134.0,147.1L134.0,141.9ZM157.3,395.4L161.9,391.9L166.1,387.4L171.8,373.9L177.0,366.4L183.0,366.4L183.0,376.7L182.8,395.4L170.1,395.4L157.3,395.4ZM183.6,335.0L201.9,334.9L212.0,334.9L212.2,355.7L202.6,355.8L180.8,355.8L181.9,352.2L183.0,345.3L182.8,342.3L183.8,337.8L183.6,335.0ZM197.6,174.4L199.6,175.3L199.7,178.3L197.6,174.4ZM189.7,192.6L190.7,191.4L193.6,192.7L192.7,197.6L190.1,195.0L189.7,192.6ZM208.0,214.5L200.5,214.6L189.4,214.3L189.4,207.9L191.0,206.0L193.0,207.0L195.4,202.9L198.2,204.7L200.8,204.0L202.0,202.3L203.4,197.9L205.0,197.1L207.3,192.2L208.9,189.8L210.3,190.2L212.2,188.4L212.6,190.4L209.7,192.0L209.3,194.2L211.1,198.4L207.6,202.5L209.6,201.6L209.6,205.4L208.6,205.7L207.4,210.1L208.0,214.5ZM185.9,200.4L187.6,198.1L188.5,200.5L185.9,200.4ZM97.3,69.0L94.2,69.0L94.2,63.8L85.0,63.8L87.3,60.6L90.4,57.9L99.3,53.5L107.9,52.2L115.6,52.6L119.1,54.6L119.2,56.9L117.6,56.7L114.9,57.9L112.0,57.2L108.8,57.8L109.6,60.2L104.6,63.1L100.0,68.0L97.3,69.0ZM53.3,28.4L56.6,24.9L71.2,17.6L72.2,17.7L78.8,12.7L83.6,10.5L84.5,11.1L88.8,9.6L88.7,11.0L86.8,11.8L82.2,16.0L82.2,17.5L78.4,20.3L70.5,23.1L64.1,26.5L64.4,27.5L67.9,27.5L58.9,31.3L56.1,31.1L53.3,28.4ZM232.1,334.8L242.3,334.8L252.4,334.8L252.4,355.7L247.3,355.7L232.3,355.7L232.1,334.8ZM222.6,355.8L232.3,355.7L247.3,355.7L247.3,360.9L247.8,376.8L242.7,376.7L222.8,376.7L222.6,355.8ZM200.3,230.2L221.1,230.3L220.9,235.5L221.1,251.1L211.3,251.1L200.2,251.1L200.3,230.2Z"/>
+  <path class="mi-served" d="M272.5,355.5L280.5,355.6L292.5,355.1L297.3,354.9L297.7,365.3L297.9,375.9L287.9,376.0L277.8,376.3L272.5,376.7L272.5,355.5ZM271.5,334.4L281.4,334.1L291.6,334.0L292.5,355.1L280.5,355.6L272.5,355.5L272.1,355.5L272.1,350.5L271.5,334.4ZM297.3,354.9L317.4,354.2L326.5,353.9L325.4,357.9L322.8,360.6L318.2,361.9L315.4,366.9L315.7,373.5L315.2,375.7L312.9,377.0L312.9,379.2L308.0,375.4L297.9,375.9L297.7,365.3L297.3,354.9ZM316.6,327.7L321.7,327.4L332.1,327.1L332.4,337.7L333.5,340.0L329.7,341.8L328.6,343.4L330.0,344.8L330.3,347.1L328.0,346.9L326.3,349.6L326.5,353.9L317.4,354.2L316.6,327.7ZM301.6,328.2L316.6,327.7L317.4,354.2L297.3,354.9L292.5,355.1L291.6,334.0L291.4,328.7L301.6,328.4L301.6,328.2Z"/>
+  <g class="mi-pin" transform="translate(304.8 351.9)"><circle class="mi-pulse" r="9"/><circle r="4.5"/><text x="12" y="4">Farmington Hills</text></g>
+</svg>
+        </div>
+      </div>
     </div>
-    <div class="slide">
-      <img class="cutout" src="images/rob-2.png" alt="Robert McClelland giving a thumbs up">
-      <div class="slide-caption"><div class="wrap">Bundle your move and your listing</div></div>
+
+    <div class="slide s-bundle" aria-roledescription="slide" aria-label="2 of 4">
+      <div class="wrap slide-inner">
+        <div class="slide-copy">
+          <p class="kicker">When you list with Rob</p>
+          <h2>Bundle your move <em>and</em> your listing.</h2>
+          <p>Your movers are scheduled around your closing, with no payment for the move until closing.</p>
+          <a class="btn btn-primary" href="#move">How the move works</a>
+          <p class="fine">Terms and conditions apply.</p>
+        </div>
+        <div class="slide-art">
+          <div class="yard-sign">
+            <span class="ys-post"></span><span class="ys-arm"></span><span class="ys-chain ys-c1"></span><span class="ys-chain ys-c2"></span>
+            <img src="images/for-sale-sign.png" alt="Rob's For Sale sign: Robert McClelland, 734-255-2140, ListwithRob.com, eXp Realty">
+          </div>
+          <svg class="truck" viewBox="0 0 380 210" aria-hidden="true">
+            <ellipse cx="190" cy="196" rx="185" ry="9" fill="rgba(27,34,50,.18)"/>
+            <rect x="118" y="18" width="250" height="150" rx="8" fill="#fff" stroke="#d5d9e5" stroke-width="2"/>
+            <rect x="118" y="120" width="250" height="18" fill="#3d4f94"/>
+            <text x="243" y="78" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="700" font-size="26" fill="#262c4d">MOVING</text>
+            <text x="243" y="102" text-anchor="middle" font-family="Open Sans,sans-serif" font-weight="600" font-size="12" letter-spacing="2" fill="#5a6478">PAID AT CLOSING</text>
+            <path d="M118 62 H68 Q56 62 50 72 L26 112 Q22 118 22 126 V168 H118 Z" fill="#343c66"/>
+            <path d="M104 74 H72 Q66 74 62 80 L46 108 H104 Z" fill="#c5d3f5"/>
+            <rect x="22" y="150" width="96" height="18" fill="#262c4d"/>
+            <rect x="16" y="156" width="14" height="10" rx="2" fill="#f2c14e"/>
+            <g fill="#1b2232"><circle cx="72" cy="172" r="22"/><circle cx="300" cy="172" r="22"/></g>
+            <g fill="#cfd3e0"><circle cx="72" cy="172" r="8"/><circle cx="300" cy="172" r="8"/></g>
+            <g>
+              <rect x="0" y="122" width="40" height="34" fill="#c99a5b"/><rect x="18" y="122" width="5" height="34" fill="#e3bd83"/>
+              <rect x="6" y="94" width="34" height="28" fill="#b9874a"/><rect x="20" y="94" width="5" height="28" fill="#d8ac6e"/>
+            </g>
+          </svg>
+        </div>
+      </div>
     </div>
-    <div class="slide">
-      <img class="cutout" src="images/rob-3.png" alt="Robert McClelland, REALTOR®, in a blue suit">
-      <div class="slide-caption"><div class="wrap">Honest pricing guidance</div></div>
+
+    <div class="slide s-guarantee" aria-roledescription="slide" aria-label="3 of 4">
+      <div class="wrap slide-inner">
+        <div class="slide-copy">
+          <p class="kicker">My promise to you</p>
+          <h2><em>100%</em> satisfaction guarantee.</h2>
+          <p>I'm not satisfied until you are. Ask me how my satisfaction guarantee works.</p>
+          <a class="btn btn-primary" href="#contact">Ask about the guarantee</a>
+          <p class="fine">Terms and conditions apply.</p>
+        </div>
+        <div class="slide-art">
+          <div class="badge" aria-hidden="true"><span class="b-txt">Satisfaction</span><span class="b-num">100%</span><span class="b-txt">Guaranteed</span></div>
+          <img class="rob-cutout" src="images/rob-2.png" alt="Robert McClelland giving a thumbs up">
+        </div>
+      </div>
     </div>
-    <div class="slide">
-      <img class="cutout" src="images/rob-4.png" alt="Robert McClelland smiling with a thumbs up">
-      <div class="slide-caption"><div class="wrap">Serving Southeast Michigan</div></div>
+
+    <div class="slide s-underwriter" aria-roledescription="slide" aria-label="4 of 4">
+      <div class="wrap slide-inner">
+        <div class="slide-copy">
+          <p class="kicker">Former mortgage underwriter</p>
+          <h2>I used to <em>approve</em> mortgages.</h2>
+          <p>Now I use that experience to price your home with the appraisal in mind and spot the offers most likely to close.</p>
+          <a class="btn btn-primary" href="#edge">Why it matters</a>
+        </div>
+        <div class="slide-art">
+          <div class="loan-doc" aria-hidden="true"><b>Loan application</b><i></i><i></i><i></i><i></i><i></i><i></i><span class="stamp">APPROVED</span></div>
+          <img class="rob-cutout" src="images/rob-4.png" alt="Robert McClelland smiling with a thumbs up">
+        </div>
+      </div>
     </div>
-    <button class="ss-btn ss-prev" aria-label="Previous photo">‹</button>
-    <button class="ss-btn ss-next" aria-label="Next photo">›</button>
-    <div class="ss-dots" role="tablist"></div>
+
+    <div class="ss-controls">
+      <button class="ss-btn ss-prev" aria-label="Previous slide">‹</button>
+      <div class="ss-dots"></div>
+      <button class="ss-btn ss-next" aria-label="Next slide">›</button>
+    </div>
   </section>
 
   <!-- HERO -->
@@ -604,7 +757,7 @@
     const root=document.querySelector('.slideshow'); if(!root) return;
     const slides=[...root.querySelectorAll('.slide')], dotsEl=root.querySelector('.ss-dots');
     let i=0, timer;
-    const dots=slides.map((_,n)=>{const d=document.createElement('button');d.setAttribute('aria-label','Show photo '+(n+1));d.onclick=()=>{go(n);restart()};dotsEl.appendChild(d);return d});
+    const dots=slides.map((_,n)=>{const d=document.createElement('button');d.setAttribute('aria-label','Show slide '+(n+1));d.onclick=()=>{go(n);restart()};dotsEl.appendChild(d);return d});
     function go(n){slides[i].classList.remove('active');dots[i].classList.remove('active');i=(n+slides.length)%slides.length;slides[i].classList.add('active');dots[i].classList.add('active')}
     function restart(){clearInterval(timer);timer=setInterval(()=>go(i+1),6000)}
     root.querySelector('.ss-prev').onclick=()=>{go(i-1);restart()};
