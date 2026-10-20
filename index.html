@@ -188,6 +188,62 @@
   .consent input{width:auto;margin-top:3px;flex:0 0 auto}
   .form-note{font-size:.8rem;color:var(--muted)}
 
+  /* Lead form (shared by the Contact section and the pop-up) */
+  .lead-form .req{color:var(--brick)}
+  .optional{border:1px dashed #c9cfe0;border-radius:12px;padding:16px 16px 18px;display:grid;gap:14px;background:rgba(255,255,255,.6)}
+  .optional legend{padding:0 8px;font-weight:600;color:var(--pine-dark);font-size:.95rem}
+  .optional legend .pill{display:inline-block;margin-right:6px;padding:2px 9px;border-radius:999px;background:var(--sand);color:var(--brick);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;vertical-align:1px}
+  .optional .hint{font-size:.85rem;color:var(--muted);margin-top:-6px}
+  .form-error{font-size:.88rem;color:#b3261e}
+  .form-success{text-align:center;padding:26px 10px}
+  .form-success .check{width:58px;height:58px;border-radius:50%;background:var(--brick);color:#fff;display:grid;place-items:center;margin:0 auto 14px;font-size:1.8rem}
+  .form-success h3{font-size:1.4rem}
+  .form-success p{margin:0 auto;color:var(--muted)}
+  .hp{position:absolute;left:-9999px}
+
+  /* Pop-up: "List with Rob" style, echoing the yard sign */
+  .lead-modal{margin:auto;border:0;padding:0;border-radius:18px;width:min(580px,calc(100% - 20px));max-height:calc(100dvh - 20px);overflow:auto;
+    box-shadow:0 30px 70px -20px rgba(20,24,44,.6);color:var(--ink);background:#fff}
+  .lead-modal::backdrop{background:rgba(20,24,44,.62);backdrop-filter:blur(3px)}
+  .lead-modal[open]{animation:pop .28s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+  .lm-head{position:relative;overflow:hidden;padding:24px 170px 22px 28px;min-height:168px;border-bottom:1px solid var(--line);
+    background:linear-gradient(125deg,transparent 0 50%,#e9ebf2 50% 66%,transparent 66%),linear-gradient(55deg,transparent 0 70%,#eef0f5 70% 82%,transparent 82%),#fafbfd}
+  .lm-head img{position:absolute;right:0;bottom:0;height:176px;width:auto}
+  .lm-brand{font-family:"Montserrat",sans-serif;font-size:1.05rem;color:var(--ink);letter-spacing:-.01em}
+  .lm-brand b{color:#1f4e8c}
+  .lm-head h2{font-size:1.75rem;margin:.35rem 0 .3rem}
+  .lm-head p{font-size:.95rem;color:var(--muted)}
+  .lm-direct{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-weight:600;color:var(--pine-dark);text-decoration:none;font-size:.95rem}
+  .lm-direct span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--brick);color:#fff}
+  .lm-close{position:absolute;top:12px;right:12px;z-index:2;width:36px;height:36px;border-radius:50%;border:0;background:#fff;color:var(--pine-dark);font-size:1.3rem;line-height:1;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+  .lm-body{padding:20px 28px 26px}
+  .lm-body form{background:none;border:0;padding:0}
+  @media (max-width:560px){
+    .lm-head{padding:20px 120px 18px 20px;min-height:140px}
+    .lm-head img{height:140px;right:-10px}
+    .lm-head h2{font-size:1.4rem}
+    .lm-head p{font-size:.88rem}
+    .lm-body{padding:16px 18px 22px}
+  }
+
+  /* Floating call / text button */
+  .fab{position:fixed;right:18px;bottom:18px;z-index:60}
+  .fab-btn{display:flex;align-items:center;gap:10px;border:0;cursor:pointer;background:var(--brick);color:#fff;font:700 .98rem "Open Sans",sans-serif;
+    padding:10px 18px 10px 10px;border-radius:999px;box-shadow:0 12px 26px -8px rgba(38,44,77,.65)}
+  .fab-btn:hover{background:var(--brick-dark)}
+  .fab-btn .ico{width:34px;height:34px;border-radius:50%;background:#fff;color:var(--brick);display:grid;place-items:center}
+  .fab-menu{position:absolute;right:0;bottom:calc(100% + 10px);min-width:240px;background:#fff;border-radius:14px;padding:8px;display:none;
+    box-shadow:0 18px 40px -12px rgba(20,24,44,.45);border:1px solid var(--line)}
+  .fab.open .fab-menu{display:grid;gap:4px}
+  .fab-menu a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--ink)}
+  .fab-menu a:hover{background:var(--paper)}
+  .fab-menu .ico{width:34px;height:34px;border-radius:50%;background:var(--sand);color:var(--brick);display:grid;place-items:center;flex:0 0 auto}
+  .fab-menu strong{display:block;color:var(--pine-dark)}
+  .fab-menu small{color:var(--muted);font-size:.85rem}
+  body.modal-open .fab{display:none}
+  @media (max-width:560px){.fab{right:12px;bottom:12px}.fab-btn{font-size:.9rem;padding:8px 14px 8px 8px}.fab-btn .ico{width:30px;height:30px}}
+
   /* Footer */
   footer{background:var(--pine-dark);color:#c9cddf;padding:44px 0 30px;font-size:.88rem}
   .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
@@ -675,44 +731,74 @@
         <p style="margin-top:1.4rem;color:var(--muted);font-size:.95rem">eXp Realty<br>39555 Orchard Hills Place, Suite 600<br>Novi, MI 48375<br><a href="tel:+18885017085" style="color:inherit">(888) 501-7085</a> (brokerage)</p>
       </div>
 
-      <!-- PLACEHOLDER: set action to your form endpoint (e.g. https://formspree.io/f/XXXXXXX) -->
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <div class="row">
-          <div><label for="name">Name</label><input id="name" name="name" required autocomplete="name"></div>
-          <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
-        </div>
-        <div><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email"></div>
-        <div>
-          <label>I'm interested in</label>
-          <div class="checks">
-            <label><input type="checkbox" name="interest" value="Selling" id="int-sell"> Selling</label>
-            <label><input type="checkbox" name="interest" value="Buying" id="int-buy"> Buying</label>
-          </div>
-        </div>
-        <div>
-          <label for="address">Property address <span style="font-weight:400;color:var(--muted)">(if selling)</span></label>
-          <input id="address" name="address" autocomplete="street-address">
-        </div>
-        <div>
-          <label for="timeline">Timeline</label>
-          <select id="timeline" name="timeline">
-            <option>Just exploring</option>
-            <option>Within 3 months</option>
-            <option>3–6 months</option>
-            <option>6+ months</option>
-          </select>
-        </div>
-        <div><label for="msg">Anything else?</label><textarea id="msg" name="message" rows="4"></textarea></div>
-        <label class="consent">
-          <input type="checkbox" name="sms_call_consent" value="Yes">
-          <span>I agree to receive calls and text messages from Robert McClelland, REALTOR® with eXp Realty, at the number provided about my real estate inquiry, including messages sent using automated technology. Consent is not a condition of any purchase or service. Message frequency varies. Message and data rates may apply. Reply STOP to opt out. See my <a href="privacy.html">Privacy Policy</a>.</span>
-        </label>
-        <button class="btn btn-primary" type="submit">Send</button>
-        <p class="form-note">Your information is only used to respond to your request. No spam, ever.</p>
-      </form>
+      <div class="lead-slot" data-prefix="c"></div>
     </div>
   </section>
 </main>
+
+<!-- LEAD FORM: one template, stamped into the Contact section and the pop-up.
+     Submissions are emailed to Rob through FormSubmit (see LEAD_ENDPOINT in the script). -->
+<template id="lead-form-tpl">
+  <form class="lead-form" novalidate>
+    <div class="row">
+      <div><label for="{p}-name">Name <span class="req">*</span></label><input id="{p}-name" name="name" required autocomplete="name"></div>
+      <div><label for="{p}-phone">Phone <span class="req">*</span></label><input id="{p}-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel"></div>
+    </div>
+    <div><label for="{p}-email">Email <span class="req">*</span></label><input id="{p}-email" name="email" type="email" required autocomplete="email"></div>
+    <fieldset class="optional">
+      <legend><span class="pill">Optional</span>Tell Rob a little more</legend>
+      <p class="hint">Skip this if you like. Send just your contact info and Rob will reach out to you.</p>
+      <div>
+        <label>I'm interested in</label>
+        <div class="checks">
+          <label><input type="checkbox" name="interest" value="Selling" data-int="sell"> Selling</label>
+          <label><input type="checkbox" name="interest" value="Buying" data-int="buy"> Buying</label>
+        </div>
+      </div>
+      <div><label for="{p}-address">Listing address <span style="font-weight:400;color:var(--muted)">(if selling)</span></label><input id="{p}-address" name="address" autocomplete="street-address"></div>
+      <div>
+        <label for="{p}-timeline">When are you looking to do this?</label>
+        <select id="{p}-timeline" name="timeline">
+          <option value="">Choose one</option>
+          <option>As soon as possible</option>
+          <option>Within 3 months</option>
+          <option>3 to 6 months</option>
+          <option>6+ months</option>
+          <option>Just exploring</option>
+        </select>
+      </div>
+      <div><label for="{p}-msg">Anything else Rob should know?</label><textarea id="{p}-msg" name="message" rows="3"></textarea></div>
+    </fieldset>
+    <label class="consent">
+      <input type="checkbox" name="sms_call_consent" value="Yes">
+      <span>I agree to receive calls and text messages from Robert McClelland, REALTOR® with eXp Realty, at the number provided about my real estate inquiry, including messages sent using automated technology. Consent is not a condition of any purchase or service. Message frequency varies. Message and data rates may apply. Reply STOP to opt out. See my <a href="privacy.html">Privacy Policy</a>.</span>
+    </label>
+    <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="form-error" role="alert" hidden></p>
+    <button class="btn btn-primary" type="submit">Have Rob reach out</button>
+    <p class="form-note">Rob will reach out personally, usually the same day. Your information is only used to respond to you. No spam, ever.</p>
+  </form>
+</template>
+
+<dialog class="lead-modal" id="lead-modal" aria-labelledby="lm-title">
+  <div class="lm-head">
+    <button class="lm-close" type="button" aria-label="Close">&times;</button>
+    <div class="lm-brand">List<b>with</b>Rob.com</div>
+    <h2 id="lm-title">Let's talk.</h2>
+    <p>Leave your info and Rob will reach right out to you.</p>
+    <a class="lm-direct" href="tel:+17342552140"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>Rather talk now? (734) 255-2140</a>
+    <img src="images/rob-1.png" alt="">
+  </div>
+  <div class="lm-body"><div class="lead-slot" data-prefix="m"></div></div>
+</dialog>
+
+<div class="fab">
+  <div class="fab-menu" id="fab-menu">
+    <a href="tel:+17342552140"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><span><strong>Call Rob</strong><small>(734) 255-2140</small></span></a>
+    <a href="sms:+17342552140"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span><strong>Text Rob</strong><small>(734) 255-2140</small></span></a>
+  </div>
+  <button class="fab-btn" type="button" aria-expanded="false" aria-controls="fab-menu"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>Call or text Rob</button>
+</div>
 
 <footer>
   <div class="wrap">
@@ -749,11 +835,52 @@
   const toggle=document.querySelector('.menu-toggle'),menu=document.getElementById('menu');
   toggle.addEventListener('click',()=>{const o=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',o)});
   menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');toggle.setAttribute('aria-expanded',false)}));
-  // CTA buttons pre-check the matching interest box
-  const map={sell:'int-sell',buy:'int-buy'};
-  document.querySelectorAll('[data-interest]').forEach(b=>b.addEventListener('click',()=>{
-    const el=document.getElementById(map[b.dataset.interest]); if(el) el.checked=true;
+
+  // Lead form: stamp the template into each slot, submit by email via FormSubmit
+  const LEAD_ENDPOINT='https://formsubmit.co/ajax/robert.mcclelland@exprealty.com';
+  const tpl=document.getElementById('lead-form-tpl').innerHTML;
+  document.querySelectorAll('.lead-slot').forEach(slot=>{slot.innerHTML=tpl.replaceAll('{p}',slot.dataset.prefix)});
+  document.querySelectorAll('.lead-form').forEach(form=>form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const err=form.querySelector('.form-error'), btn=form.querySelector('button[type=submit]');
+    err.hidden=true;
+    if(!form.reportValidity()) return;
+    const phone=form.elements.phone;
+    if(phone.value.replace(/\D/g,'').length<10){err.textContent='Please enter a 10-digit phone number.';err.hidden=false;phone.focus();return}
+    const fd=new FormData(form), data={};
+    for(const [k,v] of fd){ if(k==='interest') data.interest=(data.interest?data.interest+', ':'')+v; else data[k]=v }
+    Object.assign(data,{_subject:'New lead from ListwithRob.com: '+data.name,_template:'table',_captcha:'false',_replyto:data.email});
+    btn.disabled=true; btn.textContent='Sending…';
+    try{
+      const r=await fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||String(j.success)!=='true') throw new Error(j.message||'send failed');
+      const first=(data.name||'').trim().split(' ')[0];
+      form.outerHTML='<div class="form-success"><div class="check">✓</div><h3>Thanks'+(first?', '+first.replace(/[<>&"]/g,''):'')+'!</h3><p>Rob got your info and will reach out soon. Need him now? Call or text <a href="tel:+17342552140">(734) 255-2140</a>.</p></div>';
+    }catch(_){
+      err.innerHTML='Sorry, that didn\'t go through. Please call or text Rob at <a href="tel:+17342552140">(734) 255-2140</a>.';err.hidden=false;
+      btn.disabled=false; btn.textContent='Have Rob reach out';
+    }
   }));
+
+  // Pop-up: every "Let's talk" style button (links to #contact) opens it
+  const modal=document.getElementById('lead-modal');
+  function openLead(interest){
+    const f=modal.querySelector('.lead-form');
+    if(f&&interest){const c=f.querySelector('[data-int="'+interest+'"]'); if(c) c.checked=true}
+    modal.showModal(); document.body.classList.add('modal-open');
+    setTimeout(()=>{const n=modal.querySelector('input[name=name]'); if(n) n.focus()},50);
+  }
+  document.querySelectorAll('a[href="#contact"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();openLead(a.dataset.interest)}));
+  modal.querySelector('.lm-close').addEventListener('click',()=>modal.close());
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.close()});
+  modal.addEventListener('close',()=>document.body.classList.remove('modal-open'));
+
+  // Floating call / text button
+  const fab=document.querySelector('.fab'), fabBtn=fab.querySelector('.fab-btn');
+  fabBtn.addEventListener('click',()=>{const o=fab.classList.toggle('open');fabBtn.setAttribute('aria-expanded',o)});
+  document.addEventListener('click',e=>{if(!fab.contains(e.target)){fab.classList.remove('open');fabBtn.setAttribute('aria-expanded',false)}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){fab.classList.remove('open');fabBtn.setAttribute('aria-expanded',false)}});
   document.getElementById('yr').textContent=new Date().getFullYear();
 
   // slideshow: auto-advances every 6s, pauses on hover, arrows + dots + swipe
