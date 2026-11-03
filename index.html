@@ -746,7 +746,7 @@
         <h2>Tell me what you're planning</h2>
         <p style="margin-bottom:1.6rem;color:var(--muted)">Selling, buying, or just trying to figure out your timeline? Send a note and I'll get back to you, usually the same day.</p>
         <p class="big"><a href="tel:+17342552140" style="color:inherit;text-decoration:none">(734) 255-2140</a></p>
-        <p><a href="mailto:robert.mcclelland@exprealty.com">robert.mcclelland@exprealty.com</a></p>
+        <p><a href="mailto:rob@listwithrob.com">rob@listwithrob.com</a></p>
         <p style="margin-top:1.4rem;color:var(--muted);font-size:.95rem">eXp Realty<br>39555 Orchard Hills Place, Suite 600<br>Novi, MI 48375<br><a href="tel:+18885017085" style="color:inherit">(888) 501-7085</a> (brokerage)</p>
       </div>
 
@@ -829,7 +829,7 @@
       </div>
       <div>
         <a href="tel:+17342552140">(734) 255-2140</a><br>
-        <a href="mailto:robert.mcclelland@exprealty.com">robert.mcclelland@exprealty.com</a>
+        <a href="mailto:rob@listwithrob.com">rob@listwithrob.com</a>
       </div>
     </div>
     <!-- LOGOS: official eXp and REALTOR® files, embedded directly. Shown unaltered on a white band. -->
@@ -857,7 +857,7 @@
   menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');toggle.setAttribute('aria-expanded',false)}));
 
   // Lead form: stamp the template into each slot, submit by email via FormSubmit
-  const LEAD_ENDPOINT='https://formsubmit.co/ajax/robert.mcclelland@exprealty.com';
+  const LEAD_ENDPOINT='https://formsubmit.co/ajax/rob@listwithrob.com';
   const tpl=document.getElementById('lead-form-tpl').innerHTML;
   document.querySelectorAll('.lead-slot').forEach(slot=>{slot.innerHTML=tpl.replaceAll('{p}',slot.dataset.prefix)});
   document.querySelectorAll('.lead-form').forEach(form=>form.addEventListener('submit',async e=>{
